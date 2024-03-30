@@ -1,0 +1,6 @@
+[submodule "openssl"]
+	path = openssl
+	url = git@github.com:openssl/openssl.git
+[submodule "LibDASICS"]
+	path = LibDASICS
+	url = git@github.com:DASICS-ICT/LibDASICS.git
