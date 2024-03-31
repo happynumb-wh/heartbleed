@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <resolv.h>
 #include <assert.h>
+#include <udasics.h>
 #include "openssl/ssl.h"
 #include "openssl/err.h"
 
@@ -190,6 +191,8 @@ char * test_str = "I'm a string length more than 10\n";
 
 int main(int argc, char *argv[])
 {
+    register_udasics(0);
+
     printf("hello riscv!\n");
 
 
@@ -212,8 +215,6 @@ int main(int argc, char *argv[])
     SSL_library_init();
     SSL *ssl;
 
-    // assert(argc == 5);
-    if (argc != 5) return 0;
 
     portnum = argv[1];
     ctx = InitServerCTX();        /* initialize SSL */
@@ -232,5 +233,7 @@ int main(int argc, char *argv[])
     }
     close(server);          /* close server socket */
     SSL_CTX_free(ctx);         /* release context */
+
+    unregister_udasics();
     return 0;
 }

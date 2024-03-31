@@ -99,14 +99,31 @@ endif
 
 heartbleed: $(HEARTBLEED_TARGET)
 
-$(HEARTBLEED_TARGET): $(OPENSSL_TARGET) $(LibDASICS)
-	$(CC) $(CFLAGS) $(SSL_FLAG) $(HEARTBLEED_SRC) -o $(HEARTBLEED_TARGET) $(LibDASICS) -T$(DIR_DASICS)/ld.lds
- 
+$(HEARTBLEED_TARGET): $(OPENSSL_TARGET) $(LibDASICS) $(HEARTBLEED_SRC)
+	$(CC) $(CFLAGS) $(HEARTBLEED_SRC) -o $(HEARTBLEED_TARGET) $(LibDASICS) $(SSL_FLAG) -T$(DIR_DASICS)/ld.lds
+	$(OBJDUMP) -d $(HEARTBLEED_TARGET) > $(DIR_BUILD)/heartbleed.txt
+
 client:
 	$(CC) -g -O2 $(ATTACK_CLIENT) -o $(ATTACK_TARGET)
+	$(OBJDUMP) -d $(ATTACK_TARGET) > $(DIR_BUILD)/attack.txt
+
 
 clean:
 	rm -rf build
+
+
+.PHONY: run-server run-client
+
+HB_SERVER := $(HEARTBLEED_TARGET)
+HB_CLIENT := $(ATTACK_TARGET)
+
+HB_IP     ?= 127.0.0.1
+HB_PORT   ?= 9878
+run-server: $(HB_SERVER)
+	$(HB_SERVER) $(HB_PORT) $(CRT_TARGET) $(KEY_TARGET)
+
+run-client: $(HB_CLIENT)
+	$(HB_CLIENT) $(HB_IP) -p $(HB_PORT)
 
 distclean:
 	make -C $(DIR_DASICS) clean 
