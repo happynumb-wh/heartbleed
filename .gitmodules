@@ -1,6 +1,7 @@
 [submodule "openssl"]
 	path = openssl
-	url = git@github.com:openssl/openssl.git
+	url = git@github.com:happynumb-wh/openssl.git
+	tag = OpenSSL_1_0_1f
 [submodule "LibDASICS"]
 	path = LibDASICS
 	url = git@github.com:DASICS-ICT/LibDASICS.git
