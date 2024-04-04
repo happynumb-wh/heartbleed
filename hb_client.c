@@ -167,9 +167,10 @@ int main(int argc, char * argv[])
 
 
     printf("Connect port: %s\n", argv[3]);
-    if (connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) 
+    int error;
+    if ((error = connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr))) < 0) 
     {
-        printf("connect error\n");
+        printf("connect error %d\n", error);
         exit(1);
     }
 

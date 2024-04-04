@@ -36,12 +36,15 @@ HEARTBLEED_SRC		= server.c
 ATTACK_CLIENT		= ./hb_client.c
 ATTACK_TARGET		= $(DIR_BUILD)/attack-heartbleed
 
+# runall.c
+RUNALL_SRC = runall.c
+RUNALL_TARGET  = $(DIR_BUILD)/runall
 # ------------------------------------------------------------
 # DASICS test file, include library
 # ------------------------------------------------------------
 
 .PHONY: all dirs
-all: dirs openssl keygen crtgen heartbleed client
+all: dirs openssl keygen crtgen heartbleed client runall
 
 dirs:
 	@mkdir -p $(DIR_BUILD)
@@ -107,6 +110,8 @@ client:
 	$(CC) -g -O2 $(ATTACK_CLIENT) -o $(ATTACK_TARGET)
 	$(OBJDUMP) -d $(ATTACK_TARGET) > $(DIR_BUILD)/attack.txt
 
+runall:
+	$(CC) -g -O2 $(RUNALL_SRC) -o $(RUNALL_TARGET)
 
 clean:
 	rm -rf build
@@ -129,3 +134,6 @@ distclean:
 	make -C $(DIR_DASICS) clean 
 	make -C $(DIR_OPENSSL) clean
 	rm -rf build
+
+
+
