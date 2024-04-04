@@ -5,3 +5,4 @@
 [submodule "LibDASICS"]
 	path = LibDASICS
 	url = git@github.com:DASICS-ICT/LibDASICS.git
+	branch = nested-heartbleed-cve
